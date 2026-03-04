@@ -106,3 +106,146 @@ Model performance is evaluated using:
 - **MSE (Mean Squared Error)**
 - **RMSE (Root Mean Squared Error)**
 - **R² Score**
+
+## Dataset Overview
+
+The **MNsol dataset** is used as the primary dataset in this study for predicting **solvation free energy (ΔGsolv)**.
+
+### Dataset Statistics
+
+- Total samples: **3037**
+- Total variables: **58**
+- Number of solutes: **662**
+- Number of solvents: **106**
+- Binary solute–solvent systems: **3037**
+
+Among these:
+
+- **615 samples** are uniquely solutes  
+- **59 samples** are uniquely solvents  
+- **47 samples** can act as both solutes and solvents
+
+### Column Information
+
+The dataset includes several molecular and physicochemical descriptors. Key columns include:
+
+- `No.`
+- `FileHandle`
+- `SoluteName`
+- `Formula`
+- `Subset`
+- `Charge`
+- `Level1`
+- `Level2`
+- `Level3`
+- `Solvent`
+- `DeltaGsolv`
+- `Type`
+- `eps`
+- `n`
+- `alpha`
+- `beta`
+- `gamma`
+- `phi²`
+- `psi²`
+- `beta²`
+- `TotalArea`
+- and other molecular descriptors.
+
+---
+
+## Data Cleaning
+
+Non-predictive variables were removed from the dataset before model development.
+
+Removed columns:
+
+- `No.`
+- `FileHandle`
+- `SoluteName`
+- `Subset`
+- `beta²`
+
+After preprocessing:
+
+- **No missing values remain in the dataset.**
+
+---
+
+## Solvent Distribution
+
+The dataset contains an imbalanced distribution of solvents.
+
+Examples:
+
+| Solvent | Samples |
+|-------|---------|
+| Water | 533 |
+| Octanol | 247 |
+| Hexadecane | 198 |
+
+Many other solvents have relatively **few samples**.
+
+---
+
+## Feature Encoding
+
+Several categorical features were encoded for machine learning models.
+
+### One-Hot Encoding
+
+The following categorical variables were **one-hot encoded**:
+
+- `Solvent`
+- `Type`
+
+After encoding, the dataset contained:
+
+**158 total features**
+
+### Label Encoding
+
+The categorical feature **Formula** was **label encoded**, converting each unique molecular formula into an integer representation.
+
+---
+
+## Data Preprocessing
+
+The dataset was prepared for machine learning as follows:
+
+- **X** → Input features (all variables except the target)
+- **y** → Target variable (`DeltaGsolv`)
+
+---
+
+## Train–Validation–Test Split
+
+The dataset was divided into three sets:
+
+| Dataset | Percentage | Shape |
+|-------|-----------|-------|
+| Training | 64% | (1943, 158) |
+| Validation | 16% | (486, 158) |
+| Test | 20% | (608, 158) |
+
+---
+
+## Feature Scaling
+
+Numerical features were scaled during model training using:
+
+- **StandardScaler**
+- **MinMaxScaler**
+
+Scaling was performed inside the **GridSearchCV pipeline** to avoid data leakage.
+
+---
+
+## Hyperparameter Optimization
+
+Hyperparameter tuning was performed using:
+
+- **GridSearchCV**
+- **5-fold Cross Validation**
+
+This approach ensures robust model selection and improved predictive performance.
