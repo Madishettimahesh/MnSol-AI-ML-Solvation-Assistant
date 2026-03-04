@@ -249,3 +249,209 @@ Hyperparameter tuning was performed using:
 - **5-fold Cross Validation**
 
 This approach ensures robust model selection and improved predictive performance.
+# Model Development and Results
+
+## Model 1: XGBoost (XGB)
+
+The first model implemented in this study is the **XGBoost regression model** for predicting **solvation free energy (ΔGsolv)**.
+
+### Best Hyperparameters
+
+| Parameter | Value |
+|----------|------|
+| colsample_bytree | 0.8 |
+| learning_rate | 0.1 |
+| max_depth | 4 |
+| n_estimators | 400 |
+| subsample | 0.8 |
+| scaler | StandardScaler |
+
+### Performance Metrics
+
+| Dataset | R² | RMSE | MAE |
+|-------|------|------|------|
+| Cross-validation (5-fold) | 0.9994 | 0.4482 | 0.3170 |
+| Validation | 0.9944 | 1.6773 | 0.8250 |
+| Test | 0.9927 | 1.7522 | 0.7119 |
+
+The XGBoost model achieved **very high predictive accuracy** and demonstrated strong generalization across validation and test datasets.
+
+---
+
+# Model 2: Reduced Variable Model
+
+A second experiment was conducted by **removing 37 variables** (P, HP, OP, S, HS, OS, SP, SS).
+
+### Dataset
+
+| Property | Value |
+|-------|------|
+| Dataset Size | 3000 × 121 |
+
+### Result
+
+- Predictions on unseen samples produced an **average error of ±10**.
+- The model demonstrated **stable performance and good generalization**.
+
+---
+
+# Model 3: Simplified Encoding Model
+
+In the third experiment, feature dimensionality was reduced using simplified encoding.
+
+### Feature Engineering
+
+Encoded variables:
+
+- Solvent
+- Type
+- Formula
+
+Additionally, **37 variables were removed**.
+
+### Dataset Size
+
+| Dataset | Shape |
+|-------|------|
+| Final dataset | 3000 × 15 |
+
+### Result
+
+- Average prediction error: **±10**
+
+---
+
+# Model Visualization
+
+### Actual vs Predicted ΔGsolv
+
+Scatter plots were generated to compare **actual and predicted solvation free energy values**.
+
+These plots demonstrate a strong correlation between predicted and actual values, indicating **high model accuracy**.
+
+*(Insert image here)*
+
+---
+
+# Residual Analysis
+
+Residual analysis was conducted to evaluate prediction errors.
+
+Observations:
+
+- Most residual values are **close to zero**
+- Indicates **low prediction error**
+- Confirms **high model reliability**
+
+*(Insert image here)*
+
+---
+
+# Model 5: XGBoost with Optuna Optimization
+
+A final model was developed using **XGBoost with Optuna-based hyperparameter optimization**.
+
+### Data Preparation
+
+Removed columns:
+
+- No.
+- FileHandle
+- SoluteName
+- Subset
+- beta²
+
+### Label Encoding
+
+Encoded categorical variables:
+
+- Solvent
+- Type
+- Formula
+
+Dataset shape after encoding:
+
+| Shape |
+|------|
+| (3037, 53) |
+
+---
+
+## Random Split: Known vs Unknown Samples
+
+A random split was created using combinations of:
+
+Level1 + Level2 + Level3
+
+### Dataset Split
+
+| Dataset | Shape |
+|-------|------|
+| Train | (1920, 52) |
+| Validation | (480, 52) |
+| Test | (600, 52) |
+| Unknown | (37, 53) |
+
+---
+
+## Optuna Hyperparameter Optimization
+
+### Best Hyperparameters
+
+| Parameter | Value |
+|----------|------|
+| n_estimators | 630 |
+| max_depth | 7 |
+| learning_rate | 0.05036 |
+| subsample | 0.6497 |
+| colsample_bytree | 0.8100 |
+| reg_lambda | 11.13 |
+| reg_alpha | 2.18 |
+
+---
+
+### Model Performance
+
+| Dataset | R² | RMSE |
+|-------|------|------|
+| Train | 0.9997 | 0.3625 |
+| Validation | 0.9935 | 1.5483 |
+| Test | 0.9914 | 1.9027 |
+
+---
+
+# Deployment
+
+The trained model was deployed using **Streamlit** on **Hugging Face Spaces**, providing a web-based interface for predicting **solvation free energy (ΔGsolv)**.
+
+### Hugging Face Application
+
+MNsol ΔGsolv Predictor
+
+https://madishettimahesh-mnsol-predictor.hf.space/
+
+---
+
+# Interactive Prediction Tool
+
+The deployed tool allows users to:
+
+- Select **solute–solvent pairs**
+- Input physicochemical properties
+- Generate **real-time ΔGsolv predictions**
+
+### Output Features
+
+- Predicted ΔGsolv
+- Confidence estimation
+- User-friendly graphical interface
+
+---
+
+# Conclusion
+
+- The **MNsol-2012 dataset** enabled accurate prediction of solvation free energy.
+- **Tree-based machine learning models** outperformed neural network and classical regression models.
+- **XGBoost combined with Optuna optimization** achieved the highest predictive accuracy.
+- A **ΔGsolv prediction tool** was developed using **Streamlit** and deployed on **Hugging Face**.
+- Future improvements may involve **transfer learning, graph neural networks, and transformer-based models** to better capture molecular structural information and improve prediction accuracy.
