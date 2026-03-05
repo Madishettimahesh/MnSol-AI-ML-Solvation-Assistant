@@ -330,7 +330,7 @@ Scatter plots were generated to compare **actual and predicted solvation free en
 These plots demonstrate a strong correlation between predicted and actual values, indicating **high model accuracy**.
 
 <p align="center">
-  <img src="images/Prediction Residuals for ΔGsolvnew.png" width="700">
+  <img src="images/actual_vs_predicted_DeltaGsolv.png" width="700">
 </p>
 
 ---
@@ -346,7 +346,7 @@ Observations:
 - Confirms **high model reliability**
 
 <p align="center">
-  <img src="images/actual_vs_predicted_DeltaGsolv.png" width="700">
+  <img src="images/Prediction Residuals for ΔGsolvnew.png" width="700">
 </p>
 
 ---
