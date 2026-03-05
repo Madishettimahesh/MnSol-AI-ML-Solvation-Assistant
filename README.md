@@ -346,7 +346,7 @@ Observations:
 - Confirms **high model reliability**
 
 <p align="center">
-  <img src="images/actual_vs_predicted_DeltaGslv.png" width="700">
+  <img src="images/actual_vs_predicted_DeltaGsolv.png" width="700">
 </p>
 
 ---
