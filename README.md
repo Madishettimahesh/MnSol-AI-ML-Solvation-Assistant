@@ -400,13 +400,69 @@ Dataset shape after encoding:
 | Validation | 0.9935 | 1.5483 |
 | Test | 0.9914 | 1.9027 |
 
+This model achieved the **best performance**.
+
+---
+
+# Large-Scale Solvent Screening Dataset
+
+To explore a larger chemical space, a **combinatorial solute–solvent dataset** was generated.
+
+### Dataset Statistics
+
+| Property | Value |
+|------|------|
+| Samples | 83,740 |
+| Features | 52 |
+| Target | Not available |
+
+This dataset contains **new solute–solvent combinations**.
+
+---
+
+# Prediction Using Trained Model
+
+The optimized **XGBoost model** was used to predict **ΔGsolv** for the generated dataset.
+
+Workflow:
+
+1. Train model using **MNsol dataset (3037 samples)**
+2. Apply model to **83,740 combinations**
+3. Generate predicted **ΔGsolv values**
+
+This enables **large-scale solvent screening**.
+
+---
+
+# Semi-Supervised Learning Approach
+
+A semi-supervised learning strategy was explored.
+
+### Motivation
+
+The MNsol dataset contains **limited labeled data**, while the generated dataset contains **large unlabeled data**.
+
+Semi-supervised learning uses both.
+
+---
+
+### Workflow
+
+1. Train model using labeled MNsol data
+2. Predict ΔGsolv for unlabeled dataset
+3. Treat predictions as **pseudo-labels**
+4. Combine labeled and pseudo-labeled datasets
+5. Retrain the model
+
+This helps the model learn from **much larger data**.
+
 ---
 
 # Deployment
 
-The trained model was deployed using **Streamlit** on **Hugging Face Spaces**, providing a web-based interface for predicting **solvation free energy (ΔGsolv)**.
+The trained model was deployed using **Streamlit** on **Hugging Face Spaces**.
 
-### Hugging Face Application
+### Application
 
 MNsol ΔGsolv Predictor
 
@@ -416,23 +472,65 @@ https://madishettimahesh-mnsol-predictor.hf.space/
 
 # Interactive Prediction Tool
 
-The deployed tool allows users to:
+The web application allows users to:
 
-- Select **solute–solvent pairs**
-- Input physicochemical properties
-- Generate **real-time ΔGsolv predictions**
+- Select solute–solvent systems
+- Input physicochemical descriptors
+- Predict ΔGsolv instantly
 
-### Output Features
+Outputs include:
 
-- Predicted ΔGsolv
+- Predicted solvation free energy
 - Confidence estimation
-- User-friendly graphical interface
+- Interactive interface
 
 ---
 
 # Conclusion
 
-- The **MNsol-2012 dataset** enabled accurate prediction of solvation free energy.
-- **Tree-based machine learning models** outperformed neural network and classical regression models.
-- **XGBoost combined with Optuna optimization** achieved the highest predictive accuracy.
-- A **ΔGsolv prediction tool** was developed using **Streamlit** and deployed on **Hugging Face**.
+Key outcomes of this study:
+
+- MNsol dataset enables accurate **ΔGsolv prediction**
+- Tree-based models outperform neural networks
+- **XGBoost + Optuna** achieved best performance
+- Large-scale screening of **83k solvent systems**
+- Deployed an interactive **AI prediction tool**
+
+---
+
+# Future Work
+
+Possible future improvements:
+
+- Graph Neural Networks for molecular representation
+- Integration with DFT calculations
+- Active learning for solvent discovery
+- Expansion with additional solvation datasets
+
+---
+
+# Technologies Used
+
+- Python
+- Scikit-learn
+- XGBoost
+- Optuna
+- Pandas
+- NumPy
+- Streamlit
+- Hugging Face Spaces
+
+---
+
+# Author
+
+Madishetti Mahesh
+
+MSc Statistics  
+Central University of Punjab
+
+---
+
+# License
+
+MIT License
