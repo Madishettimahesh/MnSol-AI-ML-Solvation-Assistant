@@ -129,7 +129,7 @@ These metrics measure prediction accuracy and model robustness.
 
 ## Workflow Diagram
 
-![Workflow](images/workflow.png)
+![Workflow](images)
 ## Dataset Overview
 
 The **MNsol dataset** is used as the primary dataset in this study for predicting **solvation free energy (ΔGsolv)**.
@@ -330,7 +330,7 @@ Scatter plots were generated to compare **actual and predicted solvation free en
 These plots demonstrate a strong correlation between predicted and actual values, indicating **high model accuracy**.
 
 <p align="center">
-  <img src="images/workflow.png" width="700">
+  <img src="images/Prediction Residuals for ΔGsolvnew.png" width="700">
 </p>
 
 ---
@@ -346,7 +346,7 @@ Observations:
 - Confirms **high model reliability**
 
 <p align="center">
-  <img src="images/workflow.png" width="700">
+  <img src="images/actual_vs_predicted_DeltaGslv.png" width="700">
 </p>
 
 ---
