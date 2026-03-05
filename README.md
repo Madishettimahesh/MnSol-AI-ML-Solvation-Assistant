@@ -329,7 +329,9 @@ Scatter plots were generated to compare **actual and predicted solvation free en
 
 These plots demonstrate a strong correlation between predicted and actual values, indicating **high model accuracy**.
 
-*(Insert image here)*
+<p align="center">
+  <img src="images/workflow.png" width="700">
+</p>
 
 ---
 
@@ -343,7 +345,9 @@ Observations:
 - Indicates **low prediction error**
 - Confirms **high model reliability**
 
-*(Insert image here)*
+<p align="center">
+  <img src="images/workflow.png" width="700">
+</p>
 
 ---
 
