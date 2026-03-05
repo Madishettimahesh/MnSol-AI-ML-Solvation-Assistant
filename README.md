@@ -15,46 +15,57 @@ The most commonly used machine learning models for this task include:
   
 ## Methodology
 
-In this study, **Solvation Free Energy (ΔGsolv)** is used as the **target variable** for developing predictive machine learning models. The workflow integrates experimental solvation data, molecular descriptors, and quantum chemical descriptors to build accurate prediction models for solvent screening.
+In this work, **Solvation Free Energy (ΔGsolv)** is used as the **target variable** for building predictive machine learning models. The workflow integrates experimental solvation data, molecular descriptors, and quantum chemical descriptors to develop robust prediction models.
 
-### 1. Dataset
+### 1. Literature Review
 
-The **primary dataset used in this work is the MNsol Database**.
+A literature survey was conducted to identify reliable solvation databases for building predictive models.
 
-The **MNsol dataset** contains experimentally measured **solvation free energies (ΔGsolv)** for a wide range of solute–solvent systems. It includes approximately **3037 solvation data points**, covering various organic solvents and molecular compounds.
+The main databases considered include:
 
-The MNsol database provides reliable experimental data that can be used for training machine learning models to predict solvation free energy.
+| Database | Description |
+|---------|-------------|
+| **MNsol** | Contains ~3037 solvation free energy measurements for various solute–solvent systems |
+| **AqSolDB** | Contains ~8982 curated aqueous solubility data points |
 
-| Dataset | Description |
-|--------|-------------|
-| **MNsol** | Experimental solvation free energy dataset (~3037 solute–solvent systems) |
-
-This dataset serves as the **primary data source for model development and evaluation** in this study.
+These datasets provide experimental measurements required for training machine learning models.
 
 ---
 
-### 2. Data Processing
+### 2. Data Collection
 
-The MNsol dataset is preprocessed before model development. The preprocessing steps include:
+Experimental physicochemical properties are collected from solvation databases. These include:
+
+- LogP
+- Charge
+- Hydrogen bond acidity/basicity
+- Dielectric constant
+- Carbon aromaticity
+- Halogenicity
+- Surface tension
+
+These properties provide useful information about molecular interactions between solutes and solvents.
+
+---
+
+### 3. Data Processing and Feature Extraction
+
+The collected data undergoes preprocessing steps including:
 
 - Data cleaning
 - Handling missing values
-- Feature extraction
 - Feature normalization
+- Feature extraction
 
----
-
-### 3. Feature Engineering
-
-Two types of descriptors are extracted from molecular data.
+Two categories of descriptors are generated:
 
 #### Molecular Descriptors
 
 - Molecular weight  
 - SMILES representation  
 - InChI / InChIKey  
-- Heavy atoms  
-- Heteroatoms  
+- Number of heavy atoms  
+- Number of heteroatoms  
 - Ring count  
 - Rotatable bonds  
 - Valence electrons  
@@ -64,35 +75,40 @@ Two types of descriptors are extracted from molecular data.
 
 - HOMO energy  
 - LUMO energy  
+- Surface area  
 - Dipole moment  
 - Polarizability  
 - Mulliken charges  
 - Electrostatic potentials  
 
+These descriptors capture both **structural and electronic properties of molecules**.
+
 ---
 
-### 4. Machine Learning Models
+### 4. Machine Learning Model Development
 
-Regression-based machine learning models are developed to predict **ΔGsolv**, including:
+Several regression-based machine learning models are implemented to predict **ΔGsolv**.
 
-- Linear Regression
-- ElasticNet
-- Support Vector Regression (SVR)
-- Random Forest
-- Decision Tree
-- XGBoost
-- Gaussian Process Regression
-- Multilayer Perceptron (MLP)
-- Artificial Neural Networks (ANN)
+The models considered include:
+
+1. Linear Regression  
+2. ElasticNet  
+3. Support Vector Regressor (SVR)  
+4. Random Forest (RF)  
+5. Decision Tree (DT)  
+6. Extreme Gradient Boosting (XGBoost)  
+7. Gaussian Process Regression (GPR)  
+8. Multilayer Perceptron (MLP)  
+9. Artificial Neural Network (ANN)
 
 ---
 
 ### 5. Model Optimization
 
-Hyperparameter tuning is performed using:
+Hyperparameter tuning is performed to improve model performance using:
 
 - k-fold Cross Validation
-- Grid Search
+- Grid Search Cross Validation
 - Randomized Search
 - Optuna optimization
 
@@ -100,13 +116,20 @@ Hyperparameter tuning is performed using:
 
 ### 6. Model Evaluation
 
-Model performance is evaluated using:
+Model performance is evaluated using standard regression metrics:
 
-- **MAE (Mean Absolute Error)**
-- **MSE (Mean Squared Error)**
-- **RMSE (Root Mean Squared Error)**
-- **R² Score**
+- **MAE** – Mean Absolute Error  
+- **MSE** – Mean Squared Error  
+- **RMSE** – Root Mean Squared Error  
+- **R² Score** – Coefficient of Determination
 
+These metrics measure prediction accuracy and model robustness.
+
+---
+
+## Workflow Diagram
+
+![Workflow](images/workflow.png)
 ## Dataset Overview
 
 The **MNsol dataset** is used as the primary dataset in this study for predicting **solvation free energy (ΔGsolv)**.
@@ -255,17 +278,6 @@ This approach ensures robust model selection and improved predictive performance
 
 The first model implemented in this study is the **XGBoost regression model** for predicting **solvation free energy (ΔGsolv)**.
 
-### Best Hyperparameters
-
-| Parameter | Value |
-|----------|------|
-| colsample_bytree | 0.8 |
-| learning_rate | 0.1 |
-| max_depth | 4 |
-| n_estimators | 400 |
-| subsample | 0.8 |
-| scaler | StandardScaler |
-
 ### Performance Metrics
 
 | Dataset | R² | RMSE | MAE |
@@ -281,12 +293,6 @@ The XGBoost model achieved **very high predictive accuracy** and demonstrated st
 # Model 2: Reduced Variable Model
 
 A second experiment was conducted by **removing 37 variables** (P, HP, OP, S, HS, OS, SP, SS).
-
-### Dataset
-
-| Property | Value |
-|-------|------|
-| Dataset Size | 3000 × 121 |
 
 ### Result
 
@@ -308,12 +314,6 @@ Encoded variables:
 - Formula
 
 Additionally, **37 variables were removed**.
-
-### Dataset Size
-
-| Dataset | Shape |
-|-------|------|
-| Final dataset | 3000 × 15 |
 
 ### Result
 
@@ -351,16 +351,6 @@ Observations:
 
 A final model was developed using **XGBoost with Optuna-based hyperparameter optimization**.
 
-### Data Preparation
-
-Removed columns:
-
-- No.
-- FileHandle
-- SoluteName
-- Subset
-- beta²
-
 ### Label Encoding
 
 Encoded categorical variables:
@@ -374,14 +364,6 @@ Dataset shape after encoding:
 | Shape |
 |------|
 | (3037, 53) |
-
----
-
-## Random Split: Known vs Unknown Samples
-
-A random split was created using combinations of:
-
-Level1 + Level2 + Level3
 
 ### Dataset Split
 
@@ -454,4 +436,3 @@ The deployed tool allows users to:
 - **Tree-based machine learning models** outperformed neural network and classical regression models.
 - **XGBoost combined with Optuna optimization** achieved the highest predictive accuracy.
 - A **ΔGsolv prediction tool** was developed using **Streamlit** and deployed on **Hugging Face**.
-- Future improvements may involve **transfer learning, graph neural networks, and transformer-based models** to better capture molecular structural information and improve prediction accuracy.
