@@ -530,8 +530,6 @@ Possible future improvements:
 
 Madishetti Mahesh
 
-MSc Statistics  
-Central University of Punjab
 
 ---
 
